@@ -1,0 +1,22 @@
+div.viewpost
+  div.article
+    h1= title
+    div.created_at= article.created_at
+    div.body= article.body
+  div.commentSection
+    div.commentHeading= "Comments:"
+  - each comment in article.comments
+    div.message
+      div.person= comment.person
+      div.comment= comment.comment
+  div.article
+    form(method="post", action="/blog/addComment")
+      input(type="hidden", name="_id", value=article._id.toHexString())
+      div.row
+        span.label Author&nbsp;
+        input.commentAuthor(type="text", name="person", id="addCommentPerson")
+      div.row
+        span.label Comment&nbsp;
+        textarea.commentText(name="comment", rows=5, id="addCommentComment")
+      div#editArticleSubmit
+        input.button(type="submit", value="Send")

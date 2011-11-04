@@ -1,0 +1,14 @@
+div.article
+  h1= title
+  form.newpost(method="post")
+    div.row
+      span.label Title&nbsp; 
+      input.titleText(type="text", name="title", id="editArticleTitle")
+    div.row
+      span.label Tag&nbsp;
+      input.tags(type="text", name="tags", id="editTags")
+    div.row
+      span.label Body&nbsp;
+      textarea.contentText(name="body", rows=20, id="editArticleBody)
+    div.actions
+      input.button(type="submit", value="Send")

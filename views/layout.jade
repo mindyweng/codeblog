@@ -1,0 +1,17 @@
+!!! 5
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    #header
+      h1.header
+        a(href='/')!='{ mindy.w }'
+    #wrapper
+      div.sidebar.left
+      div.sidebar.right
+        div
+          a(href='/blog/new') NEW POST
+        div
+          a(href='/URLUtils') URL UTILS
+      div#body!= body
