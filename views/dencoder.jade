@@ -1,7 +1,11 @@
-div.article
+div.article.dencoder
   h1 URL Decoder/Encoder
   div.row
-    span.label Body&nbsp;
-    textarea.contentText(name="body", rows=20, id="editArticleBody)
-  a.button Decode
-  a.button Encode
+    textarea.contentText(name="body", rows=20, id="editArticleBody")
+  div.row
+    a.button(id='decodeBtn') Decode
+    a.button(id='encodeBtn') Encode
+  div.result
+script(type="text/javascript")
+  console.log('decoder/encoder loaded')
+- scripts.push('/js/dencodeUtil.js')

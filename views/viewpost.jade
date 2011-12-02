@@ -2,6 +2,10 @@ div.viewpost
   div.article
     h1= title
     div.created_at= article.created_at
+    div.articleId= article._id
+    div.tags
+      - each tag in article.tags
+        span.tag= tag.trim()
     div.body= article.body
   div.commentSection
     div.commentHeading= "Comments:"
@@ -20,3 +24,4 @@ div.viewpost
         textarea.commentText(name="comment", rows=5, id="addCommentComment")
       div#editArticleSubmit
         input.button(type="submit", value="Send")
+- scripts.push('/js/viewpost.js');

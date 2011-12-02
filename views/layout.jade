@@ -2,7 +2,9 @@
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/css/style.css')
+    - each script in scripts
+        script(type='text/javascript', src=script)
   body
     #header
       h1.header

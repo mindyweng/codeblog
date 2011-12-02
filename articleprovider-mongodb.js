@@ -45,6 +45,16 @@ ArticleProvider.prototype.findById = function(id, callback) {
     });
 };
 
+// remove post by Id
+ArticleProvider.prototype.remove = function(id, callback){
+  this.getCollection(function(error, article_collection){
+    if( error ) callback(error)
+    else {
+      article_collection.remove({_id: id});
+    }
+  });
+};
+
 //save
 ArticleProvider.prototype.save = function(articles, callback) {
     this.getCollection(function(error, article_collection) {
@@ -56,6 +66,7 @@ ArticleProvider.prototype.save = function(articles, callback) {
         for( var i =0;i< articles.length;i++ ) {
           article = articles[i];
           article.created_at = new Date();
+          article.tags = article.tags.split(',');
           if( article.comments === undefined ) article.comments = [];
           for(var j =0;j< article.comments.length; j++) {
             article.comments[j].created_at = new Date();

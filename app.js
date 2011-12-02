@@ -18,6 +18,11 @@ app.configure(function(){
   app.use(require('stylus').middleware({ src: __dirname + '/public' }));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
+  app.dynamicHelpers({
+    scripts: function(req, res){
+      return ['/js/jquery-1.6.2.min.js'];     
+    }
+  });
 });
 
 app.configure('development', function(){
@@ -75,7 +80,8 @@ app.get('/blog/new', function(req, res) {
 app.post('/blog/new', function(req, res){
     articleProvider.save({
         title: req.param('title'),
-        body: req.param('body')
+        body: req.param('body'),
+        tags: req.param('tags')
     }, function( error, docs) {
         res.redirect('/')
     });
@@ -83,6 +89,7 @@ app.post('/blog/new', function(req, res){
 
 app.get('/blog/:id', function(req, res) {
     articleProvider.findById(req.params.id, function(error, article) {
+      console.log(article);
         res.render('viewpost.jade',
         { locals: {
             title: article.title,
