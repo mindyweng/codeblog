@@ -1,0 +1,180 @@
+form.newpost div.row {
+  margin: 5px;
+}
+form.newpost span.label {
+  display: inline-block;
+  width: 80px;
+  text-align: right;
+  vertical-align: top;
+  padding-top: 3px;
+}
+form.newpost input.titleText,
+form.newpost input.tags {
+  width: 600px;
+  border: 1px solid #c6c6c6;
+  height: 20px;
+}
+form.newpost textarea.contentText {
+  width: 600px;
+  border: 1px solid #c6c6c6;
+  height: 250px;
+}
+form.newpost div.actions {
+  text-align: center;
+}
+div.viewpost {
+  margin: 5px auto;
+  width: 800px;
+}
+div.viewpost div.article {
+  padding-bottom: 50px;
+}
+div.viewpost div.created_at,
+div.viewpost div.tags {
+  color: #c6c6c6;
+  padding-left: 10px;
+  margin-bottom: 5px;
+}
+div.viewpost span.tag {
+  background-color: #f8e0f7;
+  margin-right: 5px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 2px 5px;
+  color: #555;
+}
+div.viewpost div.row {
+  margin: 5px 0;
+}
+div.viewpost span.label {
+  width: 80px;
+  display: inline-block;
+  vertical-align: top;
+}
+div.viewpost input.commentAuthor,
+div.viewpost textarea.commentText {
+  width: 600px;
+  border: 1px solid #666;
+}
+@font-face {
+  font-family: Aller;
+  font-style: normal;
+  src: url("/fonts/Aller/Aller_Rg.ttf");
+}
+.button {
+  color: #606060;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: solid 1px #b7b7b7;
+  background: #fff;
+  text-decoration: none;
+  padding: 5px;
+  display: inline-block;
+  *display: inline;
+  margin-right: 5px;
+  zoom: 1;
+  text-decoration: none;
+  text-align: center;
+  vertical-align: baseline;
+}
+.article {
+  position: relative;
+  padding: 24px;
+  background: #fff;
+  border-bottom: 1px solid #e3e3e6;
+  border-left: 2px solid #f6cef5;
+  -webkit-box-shadow: 0 1px 2px 0;
+  -moz-box-shadow: 0 1px 2px 0;
+  box-shadow: 0 1px 2px 0;
+}
+.article .title {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0px 10px;
+}
+.article a {
+  text-decoration: none;
+  color: #454545;
+}
+.article div.meta {
+  font-size: 10px;
+  position: absolute;
+  left: -180px;
+  top: 0px;
+  text-align: right;
+  padding-right: 4px;
+  border-right: 2px solid #df013a;
+  width: 170px;
+  height: 15px;
+}
+.article .body {
+  padding: 5px 10px;
+}
+.message {
+  clear: both;
+  overflow: hidden;
+}
+.message .person {
+  float: left;
+}
+.message .comment {
+  padding: 0 10px;
+  color: #999;
+  float: left;
+}
+.dencoder textarea {
+  width: 100%;
+  height: 100px;
+  border: 1px dashed #ccc;
+}
+.dencoder div.row {
+  margin-bottom: 5px;
+}
+body {
+  font-family: Aller, "Arial";
+  font-size: 13px;
+  color: #555;
+  width: 100%;
+  background: url("/images/bg-blue.jpg") repeat;
+  margin: 0;
+}
+h1.header {
+  font-size: 22px;
+  line-height: 40px;
+  text-align: center;
+}
+h1.header * {
+  text-decoration: none;
+  color: #df013a;
+}
+#header {
+  width: 100%;
+  text-align: center;
+}
+#footer {
+  width: 100%;
+}
+#wrapper {
+  width: 1100px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.sidebar {
+  color: #777f8c;
+  padding-top: 20px;
+  width: 10%;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+#body {
+  background: url("/images/bg-tran.png") repeat;
+  padding: 6px;
+  margin: 0 auto;
+  width: 75%;
+}
