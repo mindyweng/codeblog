@@ -1,0 +1,245 @@
+<html>
+    <head>
+        <title>qp - Quick Prototyping</title>
+        <style type="text/css">
+            body {
+                font-family: verdana; margin: 0;font-size: 16px; height: 100%; width:100%;
+            }
+            .header {
+                padding: 5px 0 0 5px;
+                vertical-align: middle;
+                height:30px;
+                font-size:18px;
+                color:white;
+                background:
+                  -webkit-radial-gradient(black 15%, transparent 16%) 0 0,
+                  -webkit-radial-gradient(black 15%, transparent 16%) 8px 8px,
+                  -webkit-radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+                  -webkit-radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+                background-color:#282828;
+                background-size:16px 16px;
+            }
+            iframe {position:absolute; left:50%; width: 50%;border: 0px; resize:none; outline:none;height: 95%;}
+            .html, .css, .js {width:100%; height:290px;}
+            .code {width: 50%;}
+            .code .title {
+                padding: 10px; background-color: #c6c6c6; opacity: 0.9; height: 20px;
+            }
+            .code textarea {
+                padding:10px;
+                width:100%;
+                height:250px;
+                font-size: 16px;
+                 box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;  
+                -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;  
+                -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+                background: -webkit-gradient(linear, left top, left 100, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));  
+                background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 100px); 
+                border: 1px solid #ccccee;
+            }  
+        </style>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+    </head>
+    <body>
+        <section class="header"><div>{ html/css/javascript in action } <span><button class="save">Save to CodeBlog</button></span></div></section>
+        <iframe name="result" width="100%" height="100%" id="main"></iframe>
+        <div class="code">
+            <section class="html"><div class="title">HTML</div><textarea id="html"></textarea></section>
+            <section class="css"><div class="title">CSS</div><textarea id="css"></textarea></section>
+            <section class="js"><div class="title">JAVASCRIPT</div><textarea id="javascript"></textarea></section>
+        </div>
+        
+        <script>
+            // simple logging function to be used in chaining. i.e. $("body").log("I am body!");
+            jQuery.fn.log = function(msg){
+                console.log("%s : %o" , msg, this);
+                return this;
+            }
+            $(document).ready(function(){
+            
+                var _initializeIframe =  function(){
+                    this.iframeHead = $('iframe#main').contents().find('head');
+                    this.iframeBody = $('iframe#main').contents().find('body');
+                    // check HTML5 localStorage support
+                    this.localStorage = function() { try { return 'localStorage' in window && window['localStorage'] !== null; } catch (e) {return false; }} ();
+                    if(this.localStorage){
+                        $("#html").val(localStorage["html"]);
+                        $("#javascript").val(localStorage["javascript"]);
+                        $("#css").val(localStorage["css"]);
+                    }
+                }();
+                var _checkSave = function(){
+                    var _ctrlFlag = false, _shiftFlag = false, _saveFlag = false, _leftRightArrow = false;
+                    var handleKeyEvents = function(event){
+                        switch(event.which){
+                            case 9 /* tab */:
+                                if(event.type == "keydown"){
+                                    if(!event.shiftKey){
+                                        var tab = "\t",
+                                            target = event.target,
+                                            selectionStart = target.selectionStart,
+                                            selectionEnd = target.selectionEnd;
+                                            target.value = target.value.slice(0,selectionStart).concat(tab).concat(target.value.slice(selectionStart,target.value.length));
+                                        // no selection
+                                        if (selectionStart == selectionEnd) {
+                                            target.selectionStart = target.selectionEnd = selectionStart + tab.length;
+                                        } else {
+                                            target.selectionStart = selectionStart;
+                                            target.selectionEnd = selectionEnd + tab.length;
+                                        }
+                                    } else{
+                                        if (selectionStart != selectionEnd) {
+                                            var pre = target.value.slice(0,selectionStart),
+                                                post = target.value.slice(selectionEnd,target.value.length),
+                                                sel = target.value.slice(selectionStart,selectionEnd);
+                                            if(sel.match(/^(\t){1}/)) {
+                                                sel = sel.replace(/^(\t){1}/,"");
+                                                target.value = pre.concat(sel).concat(post);
+                                                target.selectionStart = selectionStart;
+                                                target.selectionEnd = selectionEnd - tab.length;
+                                            }
+                                        }
+                                    }
+                                }
+                                return false;
+                                break;
+                            case 83 /* s */:
+                                if(event.ctrlKey || event.metaKey) { _handleSave(); return false;}
+                                break;
+                            case 37 /* left <- */ :
+                                if(event.ctrlKey) { $(".code").toggle("fast");  $("body").toggleClass("fullSize"); return false;}
+                                break;
+                            case 39 /* right -> */:
+                                if(event.ctrlKey) { $(".code").toggle("fast");  $("body").toggleClass("fullSize"); return false;}
+                                break;
+                            case 70 /* ctrl+shift+f */:
+                                if(event.ctrlKey && event.shiftKey) {
+                                    $("#html").val(
+                                        _formatXml($("#html").val())); 
+                                } 
+                                break;
+                            default: break;
+                        }
+                    }
+                    $('body').keydown(handleKeyEvents);
+                }
+                _checkSave();
+                
+                var _handleSave = function(){
+                    var htmlSource = $("#html").val(), 
+                        cssSource = $("#css").val()
+                        jsSource = $("#javascript").val();
+                                    
+                    var jqScript = "<script src=\"js/jquery-1.6.2.min.js\" >"; jqScript += "</" + "script" + ">";
+                    var jsScript = "<script type=\"text/javascript\">" + $("#javascript").val() + "</" + "script" + ">";
+                    var cssStyle = "<style type=\"text/css\">" + cssSource + "</style>";
+                    
+                    result.document.close();
+                    result.document.write(htmlSource + jqScript + jsScript);
+                    result.document.getElementsByTagName("head")[0].innerHTML = cssStyle;
+                    this.iframeHead.html($('<style />').html(cssSource));
+                    
+                    if(this.localStorage){
+                        localStorage["html"] = htmlSource;
+                        localStorage["css"] = cssSource;
+                        localStorage["javascript"] = jsSource;
+                    }
+                    // disabling the browser default ctrl+save event
+                    return false;
+                };
+                
+                var _formatXml = this.formatXml = function (xml) {
+                    var reg = /(>)(<)(\/*)/g;
+                    var wsexp = / *(.*) +\n/g;
+                    var contexp = /(<.+>)(.+\n)/g;
+                    xml = xml.replace(reg, '$1\n$2$3').replace(wsexp, '$1\n').replace(contexp, '$1\n$2');
+                    var pad = 0;
+                    var formatted = '';
+                    var lines = xml.split('\n');
+                    var indent = 0;
+                    var lastType = 'other';
+                    // 4 types of tags - single, closing, opening, other (text, doctype, comment) - 4*4 = 16 transitions 
+                    var transitions = {
+                        'single->single'    : 0,
+                        'single->closing'   : -1,
+                        'single->opening'   : 0,
+                        'single->other'     : 0,
+                        'closing->single'   : 0,
+                        'closing->closing'  : -1,
+                        'closing->opening'  : 0,
+                        'closing->other'    : 0,
+                        'opening->single'   : 1,
+                        'opening->closing'  : 0, 
+                        'opening->opening'  : 1,
+                        'opening->other'    : 1,
+                        'other->single'     : 0,
+                        'other->closing'    : -1,
+                        'other->opening'    : 0,
+                        'other->other'      : 0
+                    };
+
+                    for (var i=0; i < lines.length; i++) {
+                        var ln = lines[i];
+                        var single = Boolean(ln.match(/<.+\/>/)); // is this line a single tag? ex. <br />
+                        var closing = Boolean(ln.match(/<\/.+>/)); // is this a closing tag? ex. </a>
+                        var opening = Boolean(ln.match(/<[^!].*>/)); // is this even a tag (that's not <!something>)
+                        var type = single ? 'single' : closing ? 'closing' : opening ? 'opening' : 'other';
+                        var fromTo = lastType + '->' + type;
+                        lastType = type;
+                        var padding = '';
+
+                        indent += transitions[fromTo];
+                        for (var j = 0; j < indent; j++) {
+                            padding += '    ';
+                        }
+                        formatted += padding + ln + '\n';
+                    }
+                    return formatted;
+                };
+                var _escapeHTML = function(str){
+                    var div = document.createElement('div');
+                    var text = document.createTextNode(str);
+                    div.appendChild(text);
+                    return div.innerHTML;
+                }
+                var _postToCodeBlog = function(){
+                    /* late night work! fix the styling tmr!*/
+                    var miniDiag = $("<div id='dialog'></div>")
+                            .css({"z-index":10, "position":"absolute", "top": "5%", "left": "20%",
+                                    "padding": "20px",
+                                    "background": "#ccddee"})
+                            .appendTo($("body"));
+                    var caption = $("<div>Save to CodeBlog!</div>").appendTo(miniDiag);
+                    var title = $("<input type='text' name='title' size='100' placeholder='title' /><br/>").appendTo(miniDiag);
+                    var tags = $("<input type='text' name='tags' placeholder='tags' />").appendTo(miniDiag);
+                    var submit = $("<button>Go!</button>").appendTo(miniDiag);
+                    var cancel = $("<button>Cancel</button>").appendTo(miniDiag);
+                    
+                    cancel.click(function(){miniDiag.remove()});
+
+                    submit.click(function(){
+                        var htmlSrc, cssSrc, resultSrc, data = {};
+                        htmlSrc = '<pre class="html">' + _escapeHTML($('#html').val()) + '</pre>';
+                        cssSrc = '<pre class="css">' + _escapeHTML($('#css').val()) + '</pre>';
+                        resultSrc = '<pre class="result">' + result.document.head.innerHTML + $('#html').val() + '</pre>'; 
+
+                        data.title = title.val() || "made from qp!";
+                        data.body = "" + htmlSrc + cssSrc + resultSrc;
+                        data.tags = tags.val() || "css, html";
+
+                        $.ajax({ type: 'POST', url: "/blog/new", data: data,
+                            success: function(){
+                                console.log("success!")
+                                miniDiag.remove();
+                            },
+                            error: function(){console.log("error!")}}); 
+                        });
+                }
+                _handleSave();
+
+                $("button.save").click(_postToCodeBlog);
+            });
+        </script>
+    </body>
+</html>
+
