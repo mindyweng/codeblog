@@ -99,6 +99,14 @@ app.get('/blog/:id', function(req, res) {
     });
 });
 
+app.get('/blog/:id/remove', function(req, res){
+    console.log("removing post:" + req.params.id);
+    articleProvider.remove(req.params.id, function(error, article){
+        if (error) console.log("error removing article:" + req.params.id);
+        res.redirect('/');
+    });
+});
+
 app.post('/blog/addComment', function(req, res) {
     articleProvider.addCommentToArticle(req.param('_id'), {
         person: req.param('person'),
@@ -112,5 +120,10 @@ app.post('/blog/addComment', function(req, res) {
 app.get('/URLUtils', function(req, res){
   res.render('dencoder.jade', {locals:{title:'URL Utilities'}});
 });
-app.listen(3000);
+
+app.get('/qp', function(req, res){
+    res.sendfile('qp.html');
+});
+
+app.listen(8124);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

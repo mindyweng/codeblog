@@ -52,10 +52,20 @@ div.viewpost span.label {
   display: inline-block;
   vertical-align: top;
 }
+div.viewpost .commentHeading {
+  padding: 10px;
+}
 div.viewpost input.commentAuthor,
 div.viewpost textarea.commentText {
   width: 600px;
   border: 1px solid #666;
+}
+div.viewpost pre.css,
+div.viewpost pre.html,
+div.viewpost pre.result {
+  border: 1px solid #fc8;
+  padding: 10px;
+  overflow: auto;
 }
 @font-face {
   font-family: Aller;
@@ -133,7 +143,7 @@ div.viewpost textarea.commentText {
   margin-bottom: 5px;
 }
 body {
-  font-family: Aller, "Arial";
+  font-family: "Trebuchet MS", "Arial";
   font-size: 13px;
   color: #555;
   width: 100%;

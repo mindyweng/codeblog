@@ -45,12 +45,14 @@ ArticleProvider.prototype.findById = function(id, callback) {
     });
 };
 
-// remove post by Id
+// remove post by Id - DONE
 ArticleProvider.prototype.remove = function(id, callback){
   this.getCollection(function(error, article_collection){
-    if( error ) callback(error)
+    if( error ) callback(error);
     else {
-      article_collection.remove({_id: id});
+      article_collection.remove({_id: article_collection.db.bson_serializer.ObjectID.createFromHexString(id)}, function(){
+        callback(null, id);
+      });
     }
   });
 };
