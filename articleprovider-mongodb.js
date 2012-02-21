@@ -32,7 +32,6 @@ ArticleProvider.prototype.findAll = function(callback) {
 };
 
 //findById
-
 ArticleProvider.prototype.findById = function(id, callback) {
     this.getCollection(function(error, article_collection) {
       if( error ) callback(error)
@@ -78,6 +77,24 @@ ArticleProvider.prototype.save = function(articles, callback) {
         article_collection.insert(articles, function() {
           callback(null, articles);
         });
+      }
+    });
+};
+
+//edit
+ArticleProvider.prototype.edit = function(articleId, article, callback){
+    this.getCollection(function(error, article_collection){
+      if (error) callback(error);
+      else {
+          
+          article_collection.update(
+            {_id: article_collection.db.bson_serializer.ObjectID.createFromHexString(articleId)},
+            {"$set": {title: article.title, body: article.body, tags: article.tags.split(',')}},
+            function(error, article){
+              if( error ) callback(error);
+              else callback(null, article);
+            }
+         );
       }
     });
 };

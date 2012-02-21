@@ -13,7 +13,9 @@ html
       div.sidebar.left
       div.sidebar.right
         div
-          a(href='/blog/new') NEW POST
+          a(href='/blog/new', class='link') New CodeBlog
         div
-          a(href='/URLUtils') URL UTILS
+          a(href='/URLUtils', class='link') URL Encoder/Decoder
+        div
+          a(href='/qp', class='link') Quick Prototyping
       div#body!= body

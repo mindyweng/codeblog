@@ -3,8 +3,8 @@ div.viewpost
     h1= title
     div.created_at Created at -  #{article.created_at}
     div.created_at Actions - 
-        a(href='/blog/' + article._id + '/remove') DELETE 
-        //a(href='/blog/' + article._id + '/edit') /EDIT
+        a(href='/blog/' + article._id + '/remove') [DELETE]  
+        a(href='/blog/' + article._id + '/edit') [EDIT] 
     div.tags Tags -  
       - each tag in article.tags
         span.tag= tag.trim()

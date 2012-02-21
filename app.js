@@ -69,7 +69,9 @@ app.get('/', function(req, res){
         });
     })
 });
-
+/**************************
+// New post from code blog
+***************************/
 app.get('/blog/new', function(req, res) {
     res.render('newpost.jade', { locals: {
         title: 'New Post'
@@ -87,18 +89,52 @@ app.post('/blog/new', function(req, res){
     });
 });
 
+/***************************
+// Edit post from code blog
+****************************/
+app.get('/blog/:id/edit', function(req, res) {
+    articleProvider.findById(req.params.id, function(error, article) {
+        console.log(article);
+        res.render('editpost.jade',
+        {locals: {
+            title: article.title,
+            article: article,
+            tags: article.tags.join(",")
+        }
+        });
+    });
+});
+
+app.post('/blog/:id/edit', function(req, res) {
+    console.log(req.param('title'));
+    articleProvider.edit(req.params.id, {
+        title: req.param('title'),
+        body: req.param('body'),
+        tags: req.param('tags')
+    }, function(error, docs) {
+        res.redirect('/blog/'+ req.param('id'));
+    });
+
+});
+
+/************************
+// View Post
+************************/
 app.get('/blog/:id', function(req, res) {
     articleProvider.findById(req.params.id, function(error, article) {
       console.log(article);
         res.render('viewpost.jade',
         { locals: {
             title: article.title,
-            article:article
+            article: article
         }
         });
     });
 });
 
+/************************
+// Delete a post
+************************/
 app.get('/blog/:id/remove', function(req, res){
     console.log("removing post:" + req.params.id);
     articleProvider.remove(req.params.id, function(error, article){
@@ -107,6 +143,9 @@ app.get('/blog/:id/remove', function(req, res){
     });
 });
 
+/***************************
+// Add commnet(s) to a post
+****************************/
 app.post('/blog/addComment', function(req, res) {
     articleProvider.addCommentToArticle(req.param('_id'), {
         person: req.param('person'),
