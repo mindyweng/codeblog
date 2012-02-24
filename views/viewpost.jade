@@ -3,12 +3,21 @@ div.viewpost
     h1= title
     div.created_at Created at -  #{article.created_at}
     div.created_at Actions - 
-        a(href='/blog/' + article._id + '/remove') [DELETE]  
         a(href='/blog/' + article._id + '/edit') [EDIT] 
+        a(href='/blog/' + article._id + '/remove') [DELETE]  
     div.tags Tags -  
       - each tag in article.tags
         span.tag= tag.trim()
     div.body!= article.body
+    iframe#content
+    script
+        var qp_css = !{JSON.stringify('<style type=\"text/css\">' + article.code.css + '</style>')};
+        var qp_html = !{JSON.stringify(article.code.html)};
+        var qp_js = '<script type=\"text/javascript\">' + !{JSON.stringify(article.code.js)} + '</scr' + 'ipt>';
+        content.document.close();
+        content.document.write(qp_css);
+        content.document.write(qp_html);
+        content.document.write(qp_js);
   div.commentSection
     div.commentHeading= "Comments:"
   - each comment in article.comments

@@ -3,7 +3,7 @@
  */
 
 var express = require('express');
-var ArticleProvider = require('./articleprovider-mongodb').ArticleProvider;
+var ArticleProvider = require('./mongodb').ArticleProvider;
 var _ = require('underscore');
 
 var app = module.exports = express.createServer();
@@ -52,7 +52,6 @@ month_names[month_names.length] = "Dec";
 app.get('/', function(req, res){
     articleProvider.findAll( function(error,docs){
         _.each(docs, function(item){
-          //console.log(items);
           //convert article time format from Date to Date Month(i.e 10 May)
           var newTime = item.created_at;
           var newTimeFormat = 
@@ -83,7 +82,8 @@ app.post('/blog/new', function(req, res){
     articleProvider.save({
         title: req.param('title'),
         body: req.param('body'),
-        tags: req.param('tags')
+        tags: req.param('tags'),
+        code: req.param('code')
     }, function( error, docs) {
         res.redirect('/')
     });

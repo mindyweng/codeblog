@@ -62,10 +62,15 @@ div.viewpost textarea.commentText {
 }
 div.viewpost pre.css,
 div.viewpost pre.html,
-div.viewpost pre.result {
+div.viewpost pre.js {
   border: 1px solid #fc8;
   padding: 10px;
   overflow: auto;
+}
+div.viewpost iframe#content {
+  border: 1px solid #fc8;
+  width: 100%;
+  height: 100%;
 }
 @font-face {
   font-family: Aller;
