@@ -1,0 +1,29 @@
+div.editpost
+    -if (article.code)
+    iframe(width="100%", height="100%", id="main", name="result") 
+    div.code
+        section.html
+            div.title HTML
+            textarea#html=article.code.html
+        section.css
+            div.title CSS
+            textarea#css=article.code.css
+        section.js
+            div.title JAVASCRIPT
+            textarea#javascript=article.code.js
+    div.article
+      h1= title
+      form.newpost(method="post")
+        div.row
+          span.label Title&nbsp; 
+          input.titleText(type="text", name="title", id="editArticleTitle", value=article.title)
+        div.row
+          span.label Tag&nbsp;
+          input.tags(type="text", name="tags", id="editTags", value=tags)
+        div.row
+          span.label Body&nbsp;
+          textarea.contentText(name="body", rows=20, id="editArticleBody)=article.body
+        div.actions
+          button.save Save
+          input.button(type="submit", value="Send")
+- scripts.push('/js/editqp.js')

@@ -147,6 +147,32 @@ div.viewpost iframe#content {
 .dencoder div.row {
   margin-bottom: 5px;
 }
+.editpost iframe {
+  position: absolute;
+  left: 50%;
+  width: 50%;
+  border: 0px;
+  resize: none;
+  outline: none;
+  height: 95%;
+  background-color: #fff;
+}
+.editpost .code textarea {
+  resize: vertical;
+  min-height: 20px;
+  max-height: 500px;
+  padding: 10px;
+  width: 47%;
+  height: 250px;
+  font-size: 16px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+  border: 1px solid #cce;
+}
+.editpost .article {
+  width: 45%;
+}
 body {
   font-family: "Trebuchet MS", "Arial";
   font-size: 13px;
@@ -172,7 +198,6 @@ h1.header * {
   width: 100%;
 }
 #wrapper {
-  width: 1100px;
   margin: 0 auto;
   overflow: hidden;
 }
@@ -192,4 +217,5 @@ h1.header * {
   padding: 6px;
   margin: 0 auto;
   width: 75%;
+  position: relative;
 }

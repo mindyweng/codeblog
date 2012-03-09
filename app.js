@@ -3,6 +3,7 @@
  */
 
 var express = require('express');
+var stylus = require('stylus');
 var ArticleProvider = require('./mongodb').ArticleProvider;
 var _ = require('underscore');
 
@@ -15,7 +16,11 @@ app.configure(function(){
   app.set('view engine', 'jade');
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(require('stylus').middleware({ src: __dirname + '/public' }));
+  app.use(stylus.middleware({
+      src: __dirname + '/public',
+      dest: __dirname + '/public',
+      force: true,
+      debug: true}));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
   app.dynamicHelpers({
@@ -161,8 +166,9 @@ app.get('/URLUtils', function(req, res){
 });
 
 app.get('/qp', function(req, res){
+    console.log("hit");
     res.sendfile('qp.html');
 });
 
-app.listen(8124);
+app.listen(8080);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
