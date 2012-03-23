@@ -1,14 +1,24 @@
-div.article
-  h1= title
-  form.newpost(method="post")
-    div.row
-      span.label Title&nbsp; 
-      input.titleText(type="text", name="title", id="editArticleTitle")
-    div.row
-      span.label Tag&nbsp;
-      input.tags(type="text", name="tags", id="editTags")
-    div.row
-      span.label Body&nbsp;
-      textarea.contentText(name="body", rows=20, id="editArticleBody)
-    div.actions
-      input.button(type="submit", value="Send")
+div.editpost
+    div.code
+        section.html
+            div.title HTML
+            textarea#html
+        section.css
+            div.title CSS
+            textarea#css
+        section.js
+            div.title JAVASCRIPT
+            textarea#javascript
+    div.container.ib
+      form.newpost(method="post")
+        button.blue.save Save
+        div.row
+          input.title(type="text", name="title", id="editArticleTitle", value="", placeholder="Enter blog title")
+        div.row
+          input.tags(type="text", name="tags", id="editTags", value="", placeholder="Enter tags")
+            // div.row
+              span.label Summary&nbsp;
+              textarea.contentText(name="body", rows=20, id="editArticleBody)
+        div.ib
+        iframe(width="100%", height="100%", id="main", name="result") 
+- scripts.push('/js/editqp.js')

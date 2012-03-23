@@ -77,16 +77,16 @@ $(document).ready(function(){
     _checkSave();
     
     var _handleSave = function(){
-        var htmlSource = $("#html").val(), 
-            cssSource = $("#css").val()
-            jsSource = $("#javascript").val();
+        var htmlSource = $("#html").val() || '', 
+            cssSource = $("#css").val() || ''
+            jsSource = $("#javascript").val() || '';
                         
-        var jqScript = "<script src=\"js/jquery-1.6.2.min.js\" >"; jqScript += "</" + "script" + ">";
+        var jqScript = "<script src=\"/js/jquery-1.6.2.min.js\" >"; jqScript += "</" + "script" + ">";
         var jsScript = "<script type=\"text/javascript\">" + $("#javascript").val() + "</" + "script" + ">";
         var cssStyle = "<style type=\"text/css\">" + cssSource + "</style>";
-        
+        var qp_css_view = '<link rel=\"stylesheet\" type=\"text/css\    " href=\"/css/view.css\" />';
         result.document.close();
-        result.document.write(htmlSource);
+        result.document.write(qp_css_view + htmlSource);
         var h = result.document.getElementsByTagName("head")[0];
         var s = document.createElement("style");
         s.setAttribute("type","text/css");
@@ -162,44 +162,29 @@ $(document).ready(function(){
         return div.innerHTML;
     }
 
-    var _postToCodeBlog = function(){
-        /* late night work! fix the styling tmr!*/
-        var miniDiag = $("<div id='dialog'></div>")
-                .css({"z-index":10, "position":"absolute", "top": "5%", "left": "20%",
-                        "padding": "20px",
-                        "background": "#ccddee"})
-                .appendTo($("body"));
-        var caption = $("<div>Save to CodeBlog!</div>").appendTo(miniDiag);
-        var title = $("<input type='text' name='title' size='100' placeholder='title' /><br/>").appendTo(miniDiag);
-        var tags = $("<input type='text' name='tags' placeholder='tags' />").appendTo(miniDiag);
-        var submit = $("<button>Go!</button>").appendTo(miniDiag);
-        var cancel = $("<button>Cancel</button>").appendTo(miniDiag);
-        
-        cancel.click(function(){miniDiag.remove()});
-
-        submit.click(function(){
+    var _postToCodeBlog = function(e){
+            e.preventDefault();
             var htmlSrc, cssSrc, resultSrc, data = {};
             htmlSrc = '<pre class="html">' + _escapeHTML($('#html').val()) + '</pre>';
             cssSrc = '<pre class="css">' + _escapeHTML($('#css').val()) + '</pre>';
             jsSrc = '<pre class="js">' + _escapeHTML($('#javascript').val()) + '</pre>'; 
 
-            data.title = title.val() || "made from qp!";
-            data.body = "" + htmlSrc + cssSrc + jsSrc;
-            data.tags = tags.val() || "css, html";
+            data.title = $('input[name="title"]').val() || "made from qp!";
+            data.body = ""; //+ htmlSrc + cssSrc + jsSrc;
+            data.tags = $('input[name="tags"]').val() || "css, html";
             data.code = {
                 css : $('#css').val(),
                 html: $('#html').val(),
                 js: $('#javascript').val() 
             };
-            $.ajax({ type: 'POST', url: "/blog/new", data: data,
+            $.ajax({ type: 'POST', url: window.location.href, data: data,
                 success: function(){
                     console.log("success!")
-                    miniDiag.remove();
                 },
-                error: function(){console.log("error!")}}); 
+                error: function(){console.log("error!")} 
             });
+            return false;
     }
-    _handleSave();
-
+    if($("#html").val() != '') _handleSave();
     $("button.save").click(_postToCodeBlog);
 });

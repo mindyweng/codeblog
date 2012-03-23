@@ -5,45 +5,48 @@
 @import "common/common"
 @import "pages/dencode"
 @import "pages/editpost"
+html, body, #wrapper, #side, #body
+    height 100%
 body
-  // For some reason, using Aller is really slow.. commented it out for now.
-  //font-family Aller, "Arial"
-  font-family 'Trebuchet MS', "Arial"
-  font-size 13px
-  color #555
-  width 100%
-  background url(/images/bg-blue.jpg) repeat
-  margin 0
-h1.header
-  font-size 22px
-  line-height 40px
-  text-align center
-  * 
-    text-decoration none
-    color #DF013A
-#header
-  width 100%
-  text-align center
-  //background #69c
-  //-khtml-opacity 0.54
-  //opacity 0.54
-#footer
-  width 100%
-#wrapper
-  //width 1100px
-  margin 0 auto
-  overflow hidden
-.sidebar
-  color #777F8C
-  padding-top 20px
-  width 10%
+    background-image(white, #ececec)
+    // Dowloading font slows it down
+    //font-family Aller, "Arial"
+    font-family 'Trebuchet MS', "Arial"
+    font-size 13px
+    color #555
+    margin 0
+#side
+    box-shadow(inset, 0, 0, 8px, 3px, #888)
+    padding-right 20px
+    width 200px
+    text-align right
+    float left
+    //background #69c
+    //-khtml-opacity 0.54
+    //opacity 0.54
+    h1.header
+      font-size 22px
+      line-height 40px
+    a
+        text-decoration none
+        color #DF013A
+#body
+    background white
+    position relative
+    overflow-x hidden
 .left
   float left
 .right
   float right
-#body
-  background url(/images/bg-tran.png) repeat
-  padding 6px
-  margin 0 auto
-  width 75%
-  position relative
+button.blue
+    color #1A3E66
+    cursor pointer
+    padding 3px 10px 4px
+    font normal 11px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+    border 1px solid #A1AFBF
+    border-radius(3px)
+    box-shadow(inset, 0, 0, 1px, 1px, white)
+    background-image(#D7E5F5, #CBE0F5)
+button.blue:hover
+    border 1px solid #A1AFBF
+    background-image(#ccd9e8, #c1d4e8)

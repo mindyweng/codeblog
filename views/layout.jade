@@ -1,22 +1,17 @@
 !!! 5
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/css/style.css')
-    - each script in scripts
-        script(type='text/javascript', src=script)
-  body
-    #header
-      h1.header
-        a(href='/')!='{ mindy.w }'
-    #wrapper
-      // div.sidebar.left
-      //
-        div.sidebar.right
-        div
-          a(href='/blog/new', class='link') New CodeBlog
-        div
-          a(href='/URLUtils', class='link') URL Encoder/Decoder
-        div
-          a(href='/qp', class='link') Quick Prototyping
-      div#body!= body
+    head
+        title= title
+        link(rel='stylesheet', href='/css/style.css')
+        - each script in scripts
+            script(type='text/javascript', src=script)
+    body
+        div#wrapper
+            div#side
+                h1.header
+                    a(href='/')!='{ codeblog }'
+                div
+                    a(href='/blog/new', class='link') New CodeBlog
+                div
+                    a(href='/URLUtils', class='link') URL Encoder/Decoder
+            div#body!= body

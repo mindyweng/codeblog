@@ -55,6 +55,7 @@ month_names[month_names.length] = "Dec";
 
 // Routes
 app.get('/', function(req, res){
+    var posts, allTags;
     articleProvider.findAll( function(error,docs){
         _.each(docs, function(item){
           //convert article time format from Date to Date Month(i.e 10 May)
@@ -63,16 +64,25 @@ app.get('/', function(req, res){
             month_names[newTime.getMonth()] + ' ' + newTime.getDate() + ', ' + newTime.getFullYear() + ' by mindy.w' ;          
           item.created_at = newTimeFormat;
           item.author = 'mindy.w';
-          //console.log(item.comments.length);
         });
         res.render('index.jade', { 
             locals: {
                 title: 'Blog',
-                articles:docs
+                articles: docs
             }
         });
-    })
+    });
 });
+
+// find all tags
+app.get('/tags', function(req, res){
+    articleProvider.findTags( function(error, tags){
+        _.each(tags, function(tag){
+            console.log(tag);
+        });
+    });
+});
+
 /**************************
 // New post from code blog
 ***************************/
@@ -87,7 +97,7 @@ app.post('/blog/new', function(req, res){
     articleProvider.save({
         title: req.param('title'),
         body: req.param('body'),
-        tags: req.param('tags'),
+        tags: (req.param('tags').match( /(?=\S)[^,]+?(?=\s*(,|$))/g )),
         code: req.param('code')
     }, function( error, docs) {
         res.redirect('/')
@@ -115,7 +125,8 @@ app.post('/blog/:id/edit', function(req, res) {
     articleProvider.edit(req.params.id, {
         title: req.param('title'),
         body: req.param('body'),
-        tags: req.param('tags')
+        tags: (req.param('tags').match( /(?=\S)[^,]+?(?=\s*(,|$))/g )),
+        code: req.param('code')
     }, function(error, docs) {
         res.redirect('/blog/'+ req.param('id'));
     });
@@ -159,6 +170,10 @@ app.post('/blog/addComment', function(req, res) {
        } , function( error, docs) {
            res.redirect('/blog/' + req.param('_id'))
        });
+});
+
+app.get('/favicon.ico', function(req, res){
+  res.sendfile('favicon.ico');
 });
 
 app.get('/URLUtils', function(req, res){

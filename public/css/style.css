@@ -1,30 +1,10 @@
-form.newpost div.row {
-  margin: 5px;
-}
-form.newpost span.label {
-  display: inline-block;
-  width: 80px;
-  text-align: right;
-  vertical-align: top;
-  padding-top: 3px;
-}
 form.newpost input.titleText,
-form.newpost input.tags {
-  width: 600px;
+form.newpost input.tags,
+form.newpost textarea {
   border: 1px solid #c6c6c6;
-  height: 20px;
-}
-form.newpost textarea.contentText {
-  width: 600px;
-  border: 1px solid #c6c6c6;
-  height: 250px;
 }
 form.newpost div.actions {
   text-align: center;
-}
-div.viewpost {
-  margin: 5px auto;
-  width: 800px;
 }
 div.viewpost div.article {
   padding-bottom: 50px;
@@ -40,6 +20,7 @@ div.viewpost span.tag {
   margin-right: 5px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
+  -o-border-radius: 3px;
   border-radius: 3px;
   padding: 2px 5px;
   color: #555;
@@ -68,9 +49,10 @@ div.viewpost pre.js {
   overflow: auto;
 }
 div.viewpost iframe#content {
-  border: 1px solid #fc8;
   width: 100%;
   height: 100%;
+  outline: 0;
+  border: 0px;
 }
 @font-face {
   font-family: Aller;
@@ -81,6 +63,7 @@ div.viewpost iframe#content {
   color: #606060;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
+  -o-border-radius: 5px;
   border-radius: 5px;
   border: solid 1px #b7b7b7;
   background: #fff;
@@ -100,9 +83,6 @@ div.viewpost iframe#content {
   background: #fff;
   border-bottom: 1px solid #e3e3e6;
   border-left: 2px solid #f6cef5;
-  -webkit-box-shadow: 0 1px 2px 0;
-  -moz-box-shadow: 0 1px 2px 0;
-  box-shadow: 0 1px 2px 0;
 }
 .article .title {
   font-size: 20px;
@@ -139,6 +119,12 @@ div.viewpost iframe#content {
   color: #999;
   float: left;
 }
+.ib {
+  display: inline-block;
+  vertical-align: top;
+  *display: inline;
+  *zoom: 1;
+}
 .dencoder textarea {
   width: 100%;
   height: 100px;
@@ -147,64 +133,118 @@ div.viewpost iframe#content {
 .dencoder div.row {
   margin-bottom: 5px;
 }
-.editpost iframe {
-  position: absolute;
+.editpost {
+  position: relative;
+}
+.editpost .container {
+  -webkit-box-shadow: inset 5px 0px 9px -2px #888;
+  -moz-box-shadow: inset 5px 0px 9px -2px #888;
+  box-shadow: inset 5px 0px 9px -2px #888;
+  background-color: #fff;
+  border-left: 2px solid #f6cef5;
+  width: 49%;
+  height: 100%;
   left: 50%;
-  width: 50%;
+  position: relative;
+}
+.editpost .container iframe {
   border: 0px;
   resize: none;
   outline: none;
-  height: 95%;
+  height: 90%;
   background-color: #fff;
+  -webkit-box-shadow: inset 0 0 8px 0 rgba(0,0,0,0.10);
+  -moz-box-shadow: inset 0 0 8px 0 rgba(0,0,0,0.10);
+  box-shadow: inset 0 0 8px 0 rgba(0,0,0,0.10);
+  border: 1px solid #cce;
+}
+.editpost .code {
+  position: absolute;
+  left: 1%;
+  width: 48%;
 }
 .editpost .code textarea {
+  width: 100%;
   resize: vertical;
   min-height: 20px;
   max-height: 500px;
-  padding: 10px;
-  width: 47%;
   height: 250px;
-  font-size: 16px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.10);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.10);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+  font-size: 13px;
+  -webkit-box-shadow: inset 0 0 8px 0 rgba(0,0,0,0.10);
+  -moz-box-shadow: inset 0 0 8px 0 rgba(0,0,0,0.10);
+  box-shadow: inset 0 0 8px 0 rgba(0,0,0,0.10);
   border: 1px solid #cce;
 }
-.editpost .article {
-  width: 45%;
+.editpost form {
+  padding: 10px 0 0 10px;
+}
+.editpost form .save {
+  float: left;
+  height: 60px;
+  width: 60px;
+  margin-right: 5px;
+}
+.editpost .row {
+  padding: 3px 0px;
+}
+.editpost .row input.title {
+  padding: 0;
+  height: 25px;
+  font-size: 20px;
+}
+.editpost .row input.tags {
+  height: 15px;
+}
+.editpost .row input[type="text"] {
+  color: #454545;
+  width: 70%;
+}
+.editpost .row textarea {
+  width: 80%;
+  height: 80px;
+  resize: vertical;
+  max-height: 300px;
+  float: right;
+}
+html,
+body,
+#wrapper,
+#side,
+#body {
+  height: 100%;
 }
 body {
+  background-image: -webkit-gradient(linear, left, top, left bottom, color-stop(0%, #fff), color-stop(100%, #ececec));
+  background-image: -webkit-linear-gradient(top, #fff, #ececec);
+  background-image: -moz-linear-gradient(top, #fff, #ececec);
+  background-image: -ms-linear-gradient(top, #fff, #ececec);
+  background-image: linear-gradient(top, #fff, #ececec);
   font-family: "Trebuchet MS", "Arial";
   font-size: 13px;
   color: #555;
-  width: 100%;
-  background: url("/images/bg-blue.jpg") repeat;
   margin: 0;
 }
-h1.header {
+#side {
+  -webkit-box-shadow: inset 0 0 8px 3px #888;
+  -moz-box-shadow: inset 0 0 8px 3px #888;
+  box-shadow: inset 0 0 8px 3px #888;
+  padding-right: 20px;
+  width: 200px;
+  text-align: right;
+  float: left;
+}
+#side h1.header {
   font-size: 22px;
   line-height: 40px;
-  text-align: center;
 }
-h1.header * {
+#side a {
   text-decoration: none;
   color: #df013a;
 }
-#header {
-  width: 100%;
-  text-align: center;
-}
-#footer {
-  width: 100%;
-}
-#wrapper {
-  margin: 0 auto;
-  overflow: hidden;
-}
-.sidebar {
-  color: #777f8c;
-  padding-top: 20px;
-  width: 10%;
+#body {
+  background: #fff;
+  position: relative;
+  overflow-x: hidden;
 }
 .left {
   float: left;
@@ -212,10 +252,30 @@ h1.header * {
 .right {
   float: right;
 }
-#body {
-  background: url("/images/bg-tran.png") repeat;
-  padding: 6px;
-  margin: 0 auto;
-  width: 75%;
-  position: relative;
+button.blue {
+  color: #1a3e66;
+  cursor: pointer;
+  padding: 3px 10px 4px;
+  font: normal 11px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+  border: 1px solid #a1afbf;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: inset 0 0 1px 1px #fff;
+  -moz-box-shadow: inset 0 0 1px 1px #fff;
+  box-shadow: inset 0 0 1px 1px #fff;
+  background-image: -webkit-gradient(linear, left, top, left bottom, color-stop(0%, #d7e5f5), color-stop(100%, #cbe0f5));
+  background-image: -webkit-linear-gradient(top, #d7e5f5, #cbe0f5);
+  background-image: -moz-linear-gradient(top, #d7e5f5, #cbe0f5);
+  background-image: -ms-linear-gradient(top, #d7e5f5, #cbe0f5);
+  background-image: linear-gradient(top, #d7e5f5, #cbe0f5);
+}
+button.blue:hover {
+  border: 1px solid #a1afbf;
+  background-image: -webkit-gradient(linear, left, top, left bottom, color-stop(0%, #ccd9e8), color-stop(100%, #c1d4e8));
+  background-image: -webkit-linear-gradient(top, #ccd9e8, #c1d4e8);
+  background-image: -moz-linear-gradient(top, #ccd9e8, #c1d4e8);
+  background-image: -ms-linear-gradient(top, #ccd9e8, #c1d4e8);
+  background-image: linear-gradient(top, #ccd9e8, #c1d4e8);
 }

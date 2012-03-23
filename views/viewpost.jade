@@ -13,12 +13,17 @@ div.viewpost
             iframe#content
             script
                 var qp_css = !{JSON.stringify('<style type=\"text/css\">' + article.code.css + '</style>')};
+                var qp_css_view = '<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/view.css\" />'; 
                 var qp_html = !{JSON.stringify(article.code.html)};
-                var qp_js = '<script type=\"text/javascript\">' + !{JSON.stringify(article.code.js)} + '</scr' + 'ipt>';
+                var qp_js = '<script type=\"text/javascript\" src=\"/js/jquery-1.6.2.min.js">'+ '</scr' + 'ipt>';
+                qp_js += '<script type=\"text/javascript\">' + !{JSON.stringify(article.code.js)} + '</scr' + 'ipt>';
                 content.document.close();
+                content.document.write(qp_css_view);
                 content.document.write(qp_css);
                 content.document.write(qp_html);
                 content.document.write(qp_js);
+                var newh = document.getElementById("content").contentWindow.document.body.scrollHeight;
+                $("#content").height(newh);
                 content.document.close();
         !=article.body
   div.commentSection
